@@ -22,7 +22,7 @@ router.post('/register', async (req, res) => {
 
     // console.log(adminEmailChk);
     if (adminEmailCheck)
-      throw new Error('Email already registered');
+    return res.status(400).send({ message: "Email Already Registered" });
 
     req.body.password = await encryptPassword(req.body.password);
 
@@ -59,16 +59,17 @@ router.post('/login', async (req, res) => {
 
   
     if (!admin)
-      throw new Error("You are not registered");
+    return res.status(400).send({ message: "You are not registered" });
 
     const checkPassword = await
       comparePasswords(req.body.password, admin.password);
 
     if (!checkPassword)
-      throw new Error("Check Your Credentials");
+    return res.status(400).send({ message: "Check Your Credentials" });
+    
 
-    const token = await generateJwt(Admin._id);
-    res.json({ message: 'Logged In', data: token, success: true });
+    const admintoken = await generateJwt(Admin._id);
+    res.json({ message: 'Logged In', data: admintoken, success: true });
 
   }
   catch (err) {
@@ -82,6 +83,30 @@ router.post('/login', async (req, res) => {
 
 
 // User Login Api Ends
+
+
+//getUser 
+router.get('/getAdmin', async (req, res) => {
+  try {
+      const getadmin = await Admin.find().exec();
+      res.json({ message: 'Admin Details', data: getadmin, success: true });
+  }
+  catch (err) {
+      res.json({ message: err.message, success: false })
+
+  }
+});
+
+// router.post('/deleteUser', async (req, res) => {
+//   try {
+//       await User.findByIdAndRemove(req.body.id).exec();
+//       res.json({ message: "Successfully Deleted", success: true });
+//   }
+//   catch (err) {
+//       res.json({ message: err.message, success: false })
+
+//   }
+// });
 
 
 
