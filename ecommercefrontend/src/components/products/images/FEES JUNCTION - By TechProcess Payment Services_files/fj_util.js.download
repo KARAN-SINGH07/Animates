@@ -1,0 +1,83 @@
+/*
+ * Function createExitLoadHeader Logic: this used for creationg the header
+ * html for exit load to be used in different MF pages
+ */
+function createExitLoadHeader(){
+    exitLoadHeader = '';
+    exitLoadHeader +='<table width="100%" cellpadding="0" cellspacing="0">';
+    exitLoadHeader +='<tr><th>From Amount(Rs)</th>';
+    exitLoadHeader +='<th>To Amount(Rs)</th>';
+    exitLoadHeader +='<th>Load Charges(%)</th>';
+    exitLoadHeader +='<th>From Period</th>';
+    exitLoadHeader +='<th>To Period</th>';
+    exitLoadHeader +='<th>Category</th></tr>';
+    return exitLoadHeader;
+}
+
+/*
+ * Function createExitLoadData Logic: this used for creationg the html
+ * code for exit load to be used in different MF pages
+ */
+
+function createExitLoadData(index, exitLoadObject){    
+    exitLoadData = '';
+    exitLoadData +='<tr>';
+    exitLoadData +='<td>&nbsp;'+exitLoadObject.SL_FromAmt+'</td>';
+    exitLoadData +='<td>&nbsp;'+exitLoadObject.SL_ToAmt+'</td>';
+    exitLoadData +='<td>&nbsp;'+exitLoadObject.SL_Percentage+'</td>';
+    exitLoadData +='<td>&nbsp;'+exitLoadObject.SL_From_Period+'</td>';
+    exitLoadData +='<td>&nbsp;'+exitLoadObject.SL_To_Period+'</td>';
+    exitLoadData +='<td>&nbsp;'+exitLoadObject.SL_Category+'</td>';
+    exitLoadData +='</tr>';
+    return exitLoadData;
+}
+/*
+ * Function createServiceFeeHeader Logic: this used for creationg the header
+ * html for Service Fee to be used in different MF pages
+ */
+function createServiceFeeHeader(){
+    serviceFeeHeader = '';
+    return serviceFeeHeader;
+}
+/*
+ * Function createServiceFeeData Logic: this used for creationg the html
+ * code for Service Fee to be used in different MF pages
+ */
+function createServiceFeeData(index, ServiceFeeObject){
+    serviceFeeData = '';
+
+    return serviceFeeData;
+}
+/*
+ * Function createPlanTypeData Logic: this used for creationg the html
+ * code for plan Type radio buttons to be used in different MF pages
+ */
+
+   function createPlanTypeData(index, planTypeObject, radioButtonName){
+        planTypeData='';
+        var rdSelection = 'checked';
+        alert("createPlanTypeData");
+        planTypeData +='<input name="'+radioButtonName+'" type="radio" class="rdcls" id="'+radioButtonName+index+'"';
+        planTypeData +=' value="'+planTypeObject.typeCode+'" ';
+        if(index==0){
+            planTypeData +=rdSelection;
+        }
+        planTypeData +=' />'+planTypeObject.typeName;
+        return planTypeData;
+    }
+   
+   
+/*	showIt(divId)	*/
+function hideIt(divId){
+   document.getElementById(divId).style.display = 'none';
+}
+function showIt(divId){
+	document.getElementById(divId).style.display = 'block';
+}
+
+
+
+   
+
+
+

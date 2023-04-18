@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<!-- saved from url=(0046)https://www.adda247.in/iFrame-window-prod.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <title>Adda247</title>
+  </head>
+
+  <body>
+    <script>
+      var currentOrigin;
+      var whiteListedOrigins = [
+        "http://store.adda247.com",
+        "https://store.adda247.com",
+        "https://www.store.adda247.com",
+        "https://www.adda247.com",
+        "https://www.careerpower.in",
+        "https://www.adda247.in",
+        "https://info.adda247.com",
+        "https://www.sscadda.com",
+        "https://currentaffairs.adda247.com",
+        "https://www.bankersadda.com",
+        "https://hindi.bankersadda.com",
+        "https://www.teachersadda.com",
+        "https://defence.adda247.com",
+        "https://store-prod2.adda247.com",
+        "https://alphastore.adda247.com",
+        "https://beta-store.adda247.com",
+        "https://staging.teachersadda.com",
+        "https://stg.hindi.sscadda.com",
+        "https://stg.bankersadda.com",
+        "https://stg.teachersadda.com",
+        "https://stg.sscadda.com",
+        "https://stg.engineersadda.co",
+        "https://stg.currentaffairs.adda247.com",
+        "https://stg.hindi.sscadda.com",  
+      ];
+      var arrProdEnv = [
+        "http://store.adda247.com",
+        "https://store.adda247.com",
+        "https://www.store.adda247.com",
+        "https://www.adda247.com",
+        "https://www.careerpower.in",
+        "https://www.adda247.in",
+        "https://www.sscadda.com",
+        "https://currentaffairs.adda247.com",
+        "https://www.bankersadda.com",
+        "https://hindi.bankersadda.com",
+        "https://www.teachersadda.com",
+        "https://defence.adda247.com",
+        "https://beta-store.adda247.com",
+        "https://staging.teachersadda.com",
+        "https://stg.hindi.sscadda.com",
+        "https://stg.bankersadda.com",
+        "https://stg.teachersadda.com",
+        "https://stg.sscadda.com",
+        "https://stg.engineersadda.co",
+        "https://stg.currentaffairs.adda247.com",
+        "https://stg.hindi.sscadda.com",  
+      ];
+      function randomString() {
+        var chars =
+            "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
+          length = 32,
+          result = "";
+        for (var i = length; i > 0; --i)
+          result += chars[Math.round(Math.random() * (chars.length - 1))];
+        return result;
+      }
+      var cookieName = "UID";
+      function getIFrameCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(";");
+        for (var i = 0; i < ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0) == " ") {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        var valFromLS = localStorage.getItem(cname);
+        if (valFromLS && valFromLS !== null) return valFromLS;
+        return "";
+      }
+
+      function createIFrameCookie(name, value, days) {
+        if (days) {
+          var date = new Date();
+          date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+          var expires = "; expires=" + date.toGMTString();
+        } else var expires = "";
+        document.cookie = name + "=" + value + expires + "; path=/ ;";
+        localStorage.setItem(name, value);
+      }
+
+      var UID = getIFrameCookie(cookieName);
+      if (!UID || UID === "" || UID === null) {
+        UID = randomString() + new Date().getTime();
+        createIFrameCookie(cookieName, UID, 15000);
+      }
+      if (window.addEventListener) {
+        window.addEventListener("message", handleMessage);
+      } else {
+        window.attachEvent("onmessage", handleMessage);
+      }
+      function handleMessage(event) {
+        if (whiteListedOrigins.indexOf(event.origin) >= 0) {
+          currentOrigin = event.origin;
+          var isOptInAllowed = getIFrameCookie("isOptInAllowed");
+          //var email = getIFrameCookie('emailID');
+          if (event.data.cpCartCount && event.data.cpCartCount !== "") {
+            createIFrameCookie("cp_cart_count", event.data.cpCartCount, 365);
+          }
+
+          if (event.data.cartItems && event.data.cartItems !== "") {
+            createIFrameCookie("OFFLINE_CART_ITEMS", event.data.cartItems, 365);
+          }
+          if (event.data.email && event.data.email !== "") {
+            createIFrameCookie("emailID", event.data.email, 15000);
+            email = event.data.email;
+            createIFrameCookie("cp_user_email", event.data.email, 365);
+            //cpEmail = event.data.email;
+          }
+          if (event.data.cpToken && event.data.cpToken !== "") {
+            createIFrameCookie("cp_token", event.data.cpToken, 365);
+            //cpToken = event.data.cpToken;
+          }
+          if (event.data.cpUserName && event.data.cpUserName !== "") {
+            createIFrameCookie("cp_user_name", event.data.cpUserName, 365);
+            //cpUserName = event.data.cpUserName;
+          } else if (event.data.isRemoveEmail || event.data.cpToken === "") {
+            createIFrameCookie("cp_cart_count", "", -1);
+            createIFrameCookie("OFFLINE_CART_ITEMS", "", -1);
+            createIFrameCookie("cp_token", "", -1);
+            createIFrameCookie("cp_user_email", "", -1);
+            createIFrameCookie("cp_user_name", "", -1);
+            createIFrameCookie("emailID", "", -1);
+            email = "";
+            if (getIFrameCookie("cp_user_email") !== "") {
+              if (event.data.isRemoveEmail) {
+                return;
+              }
+              UID = randomString() + new Date().getTime();
+              createIFrameCookie(cookieName, UID, 15000);
+            }
+          }
+          if (event.data.isOptInAllowed) {
+            createIFrameCookie(
+              "isOptInAllowed",
+              event.data.isOptInAllowed,
+              15000
+            );
+            isOptInAllowed = event.data.isOptInAllowed;
+            var currentSiteIndex = arrProdEnv.indexOf(event.origin);
+            if (currentSiteIndex >= 0) {
+              arrProdEnv.splice(currentSiteIndex, 1);
+              localStorage.setItem(
+                "arrSitesToReload",
+                JSON.stringify(arrProdEnv)
+              );
+            }
+          }
+          parent.postMessage(
+            {
+              uid: getIFrameCookie("UID"),
+              //email: email,
+              cpToken: getIFrameCookie("cp_token"),
+              cpUserName: getIFrameCookie("cp_user_name"),
+              cpEmail: getIFrameCookie("cp_user_email"),
+              isOptInAllowed: getIFrameCookie("isOptInAllowed"),
+              cpCartCount: getIFrameCookie("cp_cart_count"),
+              offLineCartItems: getIFrameCookie("OFFLINE_CART_ITEMS")
+            },
+            event.origin
+          );
+        }
+      }
+      window.addEventListener(
+        "storage",
+        function(args) {
+          if (
+            args.key === "arrSitesToReload" &&
+            args.newValue !== null &&
+            args.newValue !== ""
+          ) {
+            var arrSitesToReload = JSON.parse(
+              localStorage.getItem("arrSitesToReload")
+            );
+            var currentSiteIndex = arrSitesToReload.indexOf(currentOrigin);
+            if (currentSiteIndex >= 0) {
+              parent.postMessage(
+                {
+                  isReload: true
+                },
+                currentOrigin
+              );
+              arrSitesToReload.splice(currentSiteIndex, 1);
+              localStorage.setItem(
+                "arrSitesToReload",
+                JSON.stringify(arrSitesToReload)
+              );
+            }
+          }
+        },
+        false
+      );
+    </script>
+  
+
+</body></html>

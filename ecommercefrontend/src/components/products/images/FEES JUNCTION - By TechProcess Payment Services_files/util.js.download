@@ -1,0 +1,172 @@
+//weekdays and Month array declaration
+var weekdays = new Array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
+var month = new Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec");
+var weekdaysshort = new Array("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
+var monthNames = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+var CURRENTDATE = {
+		currentDay : null,
+		currentMonth : null,
+		currentYear : null
+}
+function trim(value) {
+    return value.replace(/^\s+|\s+$/g, "");
+    //return ltrim(rtrim(value));
+}
+
+
+
+
+
+/*
+ * Function nameFormatting Logic: By using this function lower-upper case
+ * differences using toLowerCase function.
+ * Unwanted spaces are also removed using trim function of jquery.
+ */
+function nameFormatting(value) {
+	value = $.trim(value);
+	return value.toLowerCase();
+}
+/**
+ * Function name:dateConversion
+ * Logic:This function takes a given date format as
+ * a parameter and return the date in the form of Month Date,Year
+ */
+function dateConversion(dateformat) {
+   if(dateformat==""||dateformat==null){
+	      return "-";
+    } else{
+	var monthNames = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+	var dateInput = new Date(dateformat);
+	var month = dateInput.getMonth();
+	var day = dateInput.getDate();
+	var year = dateInput.getFullYear();
+	return monthNames[month]+" "+day+", " + year;
+    }	
+}//End of function dateConversion
+
+/**
+ * Function name: DecimalPrecision Logic: This function takes the amount as the
+ * parameter and if the amount is a whole number it adds two decimals to the
+ * amount else it rounds up the amount to the nearest value
+ * 
+ */
+
+function DecimalPrecision(pnumber, decimals) {   
+   result =  parseFloat(Math.round(pnumber * 100) / 100).toFixed(decimals);
+   return result;
+}
+
+/**
+ * This function takes the current date format it using as per the screens look and feel 
+ * Function name :getTodaysFormattedDate 
+ * Logic :This function is use to get the system date and display it Sunday Jan 21,2012 6:45 AM format
+ */
+function getTodaysFormattedDate()
+{
+    var dtToday = new Date();
+    var itrAmPm = dtToday.getHours() >= 12 ? "PM" : "AM";
+    var intDay = weekdays[dtToday.getDay()];
+    var intMonth = month[dtToday.getMonth()];
+    var intYear = dtToday.getFullYear();
+    var intTodayDate = dtToday.getDate();
+    var intHours = dtToday.getHours();
+    
+    if (intHours > 12) intHours = intHours - 12;
+    
+    var intTempMin = dtToday.getMinutes();
+    var intMinuts = intTempMin;
+    if (intTempMin <= 9) intMinuts = "0" + intTempMin;
+    
+    var formattedDate = intDay + " " + intMonth + " " + intTodayDate + ", " + intYear + " " + intHours + ":" + intMinuts + " " + itrAmPm;
+    return formattedDate;
+        
+ }
+
+/**Function formatDateNativeAndroid
+ * Logic :This date will format the date received from native date picker in the required format.
+ * This function accepts date,month,year,hour,min and ampm parameters are returns a string.
+ * ex; Thursday May 17, 2012 10:40Am
+ * 
+*/
+function getFormattedDate(intDate,intMonth,intYear,intHours,intMinuts,itrAmPm)
+{
+
+    var setDate = new Date(intYear,intMonth,intDate);
+    var intDay=setDate.getDay();
+
+    var formattedDate = weekdays[intDay] + " " + month[intMonth] + " " + intDate + ", " + intYear + " " + intHours + ":" + intMinuts + " " + itrAmPm;
+    return formattedDate;
+
+}
+
+
+
+
+/**
+ * Name : removeLastChar Description : Function to remove the last char(,) from
+ * the array of column names and values
+ */
+function removeLastChar(str, char1) {
+	return str.slice(0, str.lastIndexOf(char1));
+}
+
+/*
+Function Name : formatCurrencyWithDecimal(value)
+Description : formats input string to currency with decimals. E.g. $50,000.00
+*/
+function formatCurrencyWithDecimal(value,appendDollar) {
+	var tmpdecimal;
+    value = value.toString().replace(/\$|\,/g,'');
+    var decimal=((value-Math.floor(value))*100).toFixed(2).toString();
+    if(decimal<10)
+        tmpdecimal="0"+decimal.substring(0,1);
+    else
+        tmpdecimal=decimal.substring(0,2);
+    if(isNaN(value))
+        value = "0";
+    sign = (value == (value = Math.abs(value)));
+    value = Math.floor(value).toString();
+    var intValue=parseInt(value).toString();
+    
+    for (var i = 0; i < Math.floor((intValue.length-(1+i))/3); i++)
+    	intValue = intValue.substring(0,intValue.length-(4*i+3))+','+
+    	intValue.substring(intValue.length-(4*i+3));
+    if(true==appendDollar)
+    	return (((sign)?'':'-') + '$' + intValue+"."+tmpdecimal );
+    else
+    	return (((sign)?'':'-') +""+ intValue+"."+tmpdecimal );
+}
+
+
+/**
+ * Function replaceAll
+ * Logic : Three arguments are accepted by this function which are: 
+ * a) String on which split is to be performed. b) Find the character to be replaced.
+ * c) New character that will be used as replacement.
+ * This method is called in selectAccidentDate to split the contents of the Native date.
+ * 
+*/
+function replaceAll(txt, replace, with_this) {
+    return txt.replace(new RegExp(replace, 'g'),with_this);
+    
+}
+
+/**
+ * This function will log the passed error string on console
+ */
+function logError(fileName, functionName, errString){
+	console.log("File Name : "+ fileName + ", Function Name : "+ functionName + ", Error: "+errString);
+}
+
+/** Function: nullStringReplacements
+ *  Logic: Replaces null string values that are obtained from the Javascript object so that
+ *  insert/update queries dont allow null values filling to db.
+ */
+function nullStringReplacements(resultString)
+{
+	var nonNullStr = replaceAll(resultString,"null","");
+	nonNullStr = replaceAll(nonNullStr,"undefined","");	
+	return nonNullStr;
+}
+
+

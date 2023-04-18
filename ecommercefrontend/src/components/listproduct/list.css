@@ -1,0 +1,16 @@
+.margin-top{
+    margin-top: 100px;
+}
+body.masthead {
+    /* background: rgba(0, 0, 0, 0.7) url(./assets/img/bg.jpg); */
+    background-color: #212529;
+   height: 100%;
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;
+   background-blend-mode: darken;
+   /* background-image: url("../assets/img/header-bg1.jpg"); */
+  }
+  .App {
+    text-align: center;
+  }

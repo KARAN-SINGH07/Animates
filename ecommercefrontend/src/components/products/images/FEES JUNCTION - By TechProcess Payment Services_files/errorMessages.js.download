@@ -1,0 +1,220 @@
+/**
+ *
+ */
+//Enum for Different error code.
+var ERRORMESSAGE = {
+    SUCESS                          : "",
+    INVALID_EMAIL                   : "Please enter valid E-mail address",    
+    INVALID_PAN                     : "Please Enter valid PAN Number",
+    
+    INVALID_CUSTOMER_NAME           : "Please enter valid customer name",
+    BLANK_ADDRESS                   : "Please enter address",
+    UPDATE_SUCCESS                  : "Your profile updated successfully",
+    INVALID_CARD_EXPIRY_DATE        : "Card expiry date should be greater than current date",
+    INVALID_CARD_HOLDER_NAME        : "Name on card should contain only alphabets and spaces",
+    SINGLEQUOTEDOT_CARD_HOLDER_NAME : "Please enter a valid Name as on card",
+    BLANK_CARD_HOLDER_NAME	    : "Please enter your name as on card",
+    SPACEONLY_CARD_HOLDER_NAME      : "Please enter a valid name as on card",
+    
+
+    MISMATCHED_PASSWORD             : "New and Confirm Password values do not match",
+    INVALID_PASSWORD_LENGTH	    : "Password length should be between 7-20 with a combination of alphabets and numbers without spaces",
+    INVALID_PASSWORD                : "Password length should be between 7-20 with a combination of alphabets and numbers without spaces",
+    INVALID_PASSWORD_SPACE	    : "Password length should be between 7-20 with a combination of alphabets and numbers without spaces",
+
+    BLANK_AMOUNT	            : "Please enter the payment amount",
+
+    SELECT_CARD_EXPIRY_DATE	    : "Please select the card expiry Month and year",
+    SELECT_EXPIRY_MONTH             : "Please select the expiry month",
+    SELECT_EXPIRY_YEAR              : "Please select the expiry year",
+
+    //EMAIL ID ERRORS
+    CHECK_AT_THE_RATE_AND_SPL_CHAR  : "Please enter a valid email address. e.g. abc@domain.com",
+    INVALID_EMAIL_CHARS             : "Please enter a valid email address. e.g. abc@domain.com",
+    INVALID_EMAIL_DOMAIN            : "Please enter a valid email address. e.g. abc@domain.com",
+    INVALID_EMAIL_ID                : "Please enter a valid email address. e.g. abc@domain.com",
+    INVALID_IP_FOR_EMAIL_ID         : "Destination IP address is invalid for email id",
+    INVALID_EMAIL_ID_DOMAIN         : "Please enter a valid email address. e.g. abc@domain.com",
+    EMAIL_ID_DOMAIN_ONLY_ALPHABETS  : "Please enter a valid email address. e.g. abc@domain.com",
+    MISSING_EMAIL_HOSTNAME          : "Please enter a valid email address. e.g. abc@domain.com",
+
+    MISSING_MANDATORY_DATA      : "Please enter all details marked with a '*'",
+    MISSING_CURRENT_PASSWORD    : "Please enter your old password",
+    MISSING_NEW_PASSWORD        : "Please enter your new password",
+    MISSING_CONFIRM_PASSWORD	: "Please re-enter your password to confirm",
+    MISSING_CATEGORY	        : "Please select a category",
+    MISSING_LOCATION	        : "Please select a location",
+    MISSING_PAY_FROM	        : "Please select 'Pay From'",
+    MISSING_PAYEE               : "Please select a payee",
+    INVALID_CONSUMER_CD             :"Please enter a consumer reference without comma (,)",
+    //"Please enter valid consumer code",
+
+    //Error Messages related to Payment amount
+    BLANK_PAYMENT_AMOUNT	        : "Please enter the payment amount",
+    INVALID_PAYMENT_AMOUNT	        : "Please enter a valid payment amount",
+    INVALID_PAYMENT_AMOUNT_LENGTH	: "Payment amount should not be greater than 11 digits",
+    INVALID_PAYMENT_AMOUNT_ZERO         : "Payment amount should not be zero",
+    NONNUMERIC_PAYMENT_AMOUNT           : "Payment amount should contain only numbers",
+    NEGATIVE_PAYMENT_AMOUNT	        : "Payment amount should not be negative",
+
+    //Error Messages related to Customer Name
+    BLANK_CUSTOMER_FIRST_NAME             : "Please enter first name",
+    INVALID_CUSTOMER_FIRST_NAME           : "First name should contain alphabets only",
+    SPACEONLY_CUSTOMER_FIRST_NAME         : "Please enter a valid first name",
+    NUMERIC_CUSTOMER_FIRST_NAME           : "First name should contain alphabets, special characters (' and .) and space only",
+    
+    BLANK_CUSTOMER_MIDDLE_NAME             : "Please enter middle name",
+    INVALID_CUSTOMER_MIDDLE_NAME           : "Middle name should contain alphabets only",
+    SPACEONLY_CUSTOMER_MIDDLE_NAME         : "Please enter a valid middle name",
+    NUMERIC_CUSTOMER_MIDDLE_NAME           : "Middle name should contain alphabets, special characters (' and .) and space only",
+
+
+    BLANK_CUSTOMER_LAST_NAME             : "Please enter last name",
+    INVALID_CUSTOMER_LAST_NAME           : "Last name should contain alphabets only",
+    SPACEONLY_CUSTOMER_LAST_NAME         : "Please enter a valid last name",
+    NUMERIC_CUSTOMER_LAST_NAME           : "Last name should contain alphabets, special characters (' and .) and space only",
+
+
+    BLANK_CUSTOMER_NAME             : "Please enter the customer name",
+    
+
+    //Error Messages related to DTH Recharge
+    BLANK_CONSUMER_NUMBER           : "Please enter the DTH No. or select a registered DTH No",
+    INVALID_CONSUMER_NUMBER         : "DTH No. should be numeric",
+    INVALID_DTH_PROVIDER            : "Please select a DTH provider",
+    BLANK_RECHARGE_AMOUNT	    : "Please enter the recharge amount",
+    INVALID_RECHARGE_AMOUNT	    : "Please enter a valid recharge amount",
+
+
+    //Error Messages related to Mobile Number
+    BLANK_MOBILE_NUMBER            : "Please enter a mobile no",
+    INVALID_MOBILE_NUMBER          : "Mobile no. should contain only numbers",
+    INVALID_MOBILE_NUMBER_LENGTH   : "Mobile no should be 10 digits",
+    ENTER_OR_SELECT_MOBILE_NUMBER  : "Please enter a mobile no. or select a registered mobile no",
+
+
+    BLANK_HOME_PHONE_NO            :"Please enter the home phone no",
+    NONNUNERIC_HOME_PHONE_NO       :"Phone no. should contain only numbers",
+    INVALID_HOME_PHONE_NO_LENGTH   :"Phone no. should be 5 to 8 digits in length",
+
+    INVALID_STD_CODE_LENGTH        :"STD code length should be 2 to 5 digits",
+    BLANK_STD_CODE                 :"Please enter an STD code",
+    NONNUNERIC_STD_CODE            :"STD code should contain only numbers",
+
+    INVALID_COUNTRY_CODE_LENGTH        :"Country code length should be 2 digits",
+    BLANK_COUNTRY_CODE                 :"Please enter an country code",
+    NONNUNERIC_COUNTRY_CODE            :"Country code should contain only numbers",
+    
+    BLANK_CITY_CODE				:	"Please enter city code",
+    BLANK_PHONE_NUMBER			:	"Please enter phone number",
+
+    NUMERIC_ADDRESS             :"Address should contails alphabats and/or number and special characters",
+    SPLCHAR_ADDRESS             :"Address should contails alphabats and/or number and special characters",
+    SPACEONLY_ADDRESS           :"Address should contails alphabats and/or number and special characters",
+
+    BLANK_ADDRESS_LINE1         :"Please enter address line 1",
+    NUMERIC_ADDRESS_LINE1       :"Address 1 should contain alphabets and/or numbers and special characters",
+    SPLCHAR_ADDRESS_LINE1       :"Address 1 should contain alphabets and/or numbers and special characters",
+    SPACEONLY_ADDRESS_LINE1     :"Address 1 should contain alphabets and/or numbers and special characters",
+
+    NUMERIC_ADDRESS_LINE2       :"Address 2 should contain alphabets and/or numbers and special characters",
+    SPLCHAR_ADDRESS_LINE2       :"Address 2 should contain alphabets and/or numbers and special characters",
+    SPACEONLY_ADDRESS_LINE2     :"Address 2 should contain alphabets and/or numbers and special characters",
+
+    BLANK_PIN_CODE              :"Please enter pin code",
+    INVALID_PIN_CODE_LENGTH     :"Pin code should be 6 digits in length",
+    NONNUNERIC_PIN_CODE         :"Pin code should contain only numbers",
+
+    BLANK_CITY                  :"Please enter city",
+    NUMERIC_CITY                :"City should contain only alphabets and spaces",
+    SPLCHAR_CITY                :"City should contain only alphabets and spaces",
+    SPACEONLY_CITY              :"Please enter a valid city",
+
+    BLANK_STATE                 :"Please select state",
+    NUMERIC_STATE               :"State should contain only alphabets and spaces",
+    SPLCHAR_STATE               :"State should contain only alphabets and spaces",
+    SPACEONLY_STATE             :"Please enter a valid state",
+
+    BLANK_COUNTRY               :"Please select country",
+    NUMERIC_COUNTRY             :"Country should contain only alphabets and spaces",
+    SPLCHAR_COUNTRY             :"Country should contain only alphabets and spaces",
+    SPACEONLY_COUNTRY           :"Please enter a valid country",
+
+    SPLCHAR_SECANS              :"Secret answer should contain alphabets and/or numbers and special characters",
+    SPACEONLY_SECANS            :"Please enter a valid secret answer",
+
+    INVALID_CITY                :"City should contain only alphabets and spaces",
+    INVALID_STATE               :"State should contain only alphabets and spaces",
+    INVALID_COUNTRY             :"Country should contain only alphabets and spaces",
+
+    BLANK_PASSWORD              :"Please enter your password",
+    BLANK_LOGIN_ID              :"Please enter your login ID",
+
+    INVALID_LOGIN_ID_LENGTH     :"Your user ID should be between 7 to 20 characters in length",
+    INVALID_LOGIN_ID            :"Please enter a valid user ID",
+    INVALID_LOGIN_SPACE	        :"User ID should not contain spaces",
+    BLANK_STUDENTID             :"Please enter student ID",
+    //INVALID_STUDENTID           :"Student Id Should Contain on Aphabet or Numbers",
+    BLANK_COURSENAME            :"Please select course name",
+    BLANK_COURSEDESC            :"Please select course description",
+    BLANK_COURSETYPE            :"Please select course type",
+    BLANK_COURSEYEAR            :"Please select course year",
+    INVALID_AMOUNT              :"Please enter valid amount",
+    INVALID_STUDENTID           :"Student Id only contains alphabet and/or number",
+    BLANK_PAYMENTMODE           :"Please select payment mode",
+    BLANK_BANK                  :"Please select bank",
+    BLANK_BANKTYPE              :"Please select bank type",
+    BLANK_PAYMENTTYPE           :"Please select payment type",
+    BLANK_STUDENTNAME           :"Please enter student name",
+    BLANK_EMAILID				:"Please enter email address",
+    AMOUNT_MUST_GREATER         :"Amount must be greater than 0",
+    INVALID_STUDENTNAME         :"Student name should contain only alphabets or numbers",
+
+    
+    SELECT_STUDENT_NAME         :"Please select student name",
+    ENTER_STUDENT_NAME         	:"Please enter student name",
+    SELECT_BRANCH               :"Please select branch",
+    SELECT_COURSE               :"Please select course",
+    SELECT_COURSE_DETAILS       :"Please select course detail",
+    SELECT_COURSE_TYPE          :"Please select course type",
+    SELECT_COURSE_PATTERN       :"Please select pattern",
+    SELECT_COURSE_TERM       :"Please select term",
+    FUTURE_DUES					:"Future dues",
+    EXPIRED						:"Expired",
+    INVALID_DATA				:"Invalid data",
+    STUDENT_FEES_NOT_AVAILABLE_PAY_ON_YOUR_RISK
+    :	"<br/>Institute havent given the data for this student so we have showing the data which is related to the associated course Pay this course amount on your own risk<br/><br/>",
+    FUTURE_DUES_MESSAGE			:	"Future dues are there yet to come",
+    FEES_EXPIRY_DATE_HAS_BEEN_COMPLETED	:	"expiry for this course has been completed, kindly pay the fees at institute centre only",
+    NO_FEES_DATA_AVAILABLE			:	"No fees data available, please contact institute administrator",
+    FEES_AS_PER_INSTITUTE_DATA	:	"Fees are as per institute record",
+    FEES_AS_PER_COURSE_DEFAULT_DATA
+    :	"No data available for the selected student as per institute record,<br/>Following are the default fees for your selection",
+
+    NO_DATA_AVAILABLE_CONTACT_ADMIN
+    :	"No data Available for the selected student as per the institute record,<br>Please contact institute administrator",
+    STUDENT_DATA_NOT_FOUND		:	"Entered member id data not found, Please contact administrator",
+    	
+    NO_DUE_FEE		:	"No fees due currently",
+    SELECT_FEE_CHECKBOX		:	"Please check at least one fee for payment",
+    ENTER_MEMBER_ID			:	"Please enter member Id",
+    PAID					:	"Paid",
+    SELECT_STUDENT			:	"Please select student",
+    NO_CONFIGURATION_FOUND_FOR_YOUR_SELECTION	:	"No configuration found for your selection, please check the selection or contact administrator",
+    STUDENT_ALREADY_ASSOCIATED_PLEASE_ENTER_VALID_STUDENT_ID	:	"Student already associated with other user, please enter valid student Id or contact administrator",    
+    NO_RECORD_FOUND	:	"No record found",
+    PLEASE_CONTACT_ADMIN_FOR_FURTHER_ASSISTANCE : " Please contact administrator for further assistance",
+
+    TERMS_AND_CONDITIONS :"<ol><li> I-Term fees must be paid Before 5th April every year(at the time of admission for new students). And II-Term fees must be paid before 15th-October every year. Late fee will be levied per day after the due date.\n\
+                           </li><li>Fees once paid is non refundable non transferable under any circumstances.\n\
+                           </li><li>Press Proceed if you agree the payment terms & conditions or Cancel</li></ol>",
+
+    DEMAND_DRAFT_NOTE:  "D.D. in favour of Shree Swaminarayan Gurukul payable at ",
+    ONLINE_PAYMENT_NOTE: "Net Banking / Visa / Master / Credit/Debit Card charges will be applied Extra.\n\
+                          (Extra Charges Applicable)<ul><li> Netbanking : Rs.15</li>\n\
+                                                         <li>Other Banks: Rs.3</li>\n\
+                                                         <li>Amex Cards : 2.50%</li>\n\
+                                                         <li>Other Cards: 1.66%</li></ul> "
+
+    	
+};

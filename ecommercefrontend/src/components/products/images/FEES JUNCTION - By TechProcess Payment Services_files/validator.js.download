@@ -1,0 +1,1353 @@
+function hideShowCardDetails() {
+    if(document.getElementById("drpPayFrom").value==-1) {
+        $("#CardDetails").show();
+    } else {
+        document.getElementById("cardExpMonth").value="";
+        document.getElementById("cardExpYear").value="";
+        document.getElementById("chkCardRegister").checked=false;
+        hideShow(false,['CardDetails','CardShortName','lblCardShortName'],['cardName','cardHolderName','cardNo','cardType']);
+    }
+    document.getElementById("alerts").innerHTML="";
+}
+
+var CURRENTDATE = {
+    currentDay : null,
+    currentMonth : null,
+    currentYear : null
+}
+
+function validateBillerDetails(locValue,value){
+    if((isEmpty(locValue)|| locValue=='0') && (value=='Enter Biller Name' || isEmpty(value))){
+        return ERRORMESSAGE.BLANK_BILLER_SEARCH_DETAILS;
+        return false;
+    }
+    else if((isEmpty(locValue)|| locValue=='0') && !isEmpty(locValue)){
+        return ERRORMESSAGE.BLANK_BILLER_SEARCH_LOCATION;
+        return false;
+    }
+    return ERRORMESSAGE.SUCESS;
+}
+/**
+ * Function name: validateDTHConsumerNo
+ *  Logic: This function is for validating the Consumer number
+ */
+
+function validateCardIssuerAuth(value)
+{
+    if(isEmpty(value)|| value=='0'){
+        return ERRORMESSAGE.BLANK_CARD_ISSUER_COMPANY;
+       
+    }
+    return  ERRORMESSAGE.SUCESS;
+}
+function validateServiceProvider(value)
+{
+   
+    if(isEmpty(value)|| value=='0'){
+        return ERRORMESSAGE.BLANK_SERVICE_PROVIDER;
+        return false;
+    }
+    return  ERRORMESSAGE.SUCESS;
+}
+function validateDTHConsumerNo(value){
+    $("#errorMsgDB").hide();
+    if(isEmpty(value)){
+        return ERRORMESSAGE.BLANK_CONSUMER_NUMBER;
+    }
+    if(!isNumeric(value)){
+        return ERRORMESSAGE.INVALID_CONSUMER_NUMBER;
+    }else if(!isAlphaNumericWithoutSpace(value)){
+        return ERRORMESSAGE.INVALID_CONSUMER_NUMBER;
+    }else{
+        return  ERRORMESSAGE.SUCESS;
+    }
+}
+
+
+
+
+/**
+ * Function name: validateRechargeAmount
+ *  Logic: This function is for validating entered Payment amount
+ *  returns error messages as appropriate
+ */
+function validateRechargeAmount(value){
+    $("#errorMsgDB").hide();
+    if(isEmpty(value)){
+        return ERRORMESSAGE.BLANK_RECHARGE_AMOUNT;
+    }else if(!isNumeric(value)){
+        return ERRORMESSAGE.INVALID_RECHARGE_AMOUNT;
+    }else{
+        return ERRORMESSAGE.SUCESS;
+    }
+}
+
+
+/**
+ * Function name: validateDTHConsumerNo
+ *  Logic: This function is for validating the Consumer number
+ */
+
+function validateRechargeMobileNo(value){
+    $("#errorMsgDB").hide();
+    if(isEmpty(value)){
+        return ERRORMESSAGE.ENTER_OR_SELECT_MOBILE_NUMBER;
+    }else if(!isNumeric(value)){
+        return ERRORMESSAGE.INVALID_MOBILE_NUMBER;
+    }else if(!validateExactLength(value, 10)){
+        return ERRORMESSAGE.INVALID_MOBILE_NUMBER_LENGTH;
+    }else{
+        return  ERRORMESSAGE.SUCESS;
+    }
+}
+/**
+ * Function name: validateAddressLine2
+ *  Logic: Logic: This function is for validating the Pin code
+ */
+
+function validateAddressLine2(value){
+    if(!isEmpty(value)){
+        if(isNumeric(value)){
+            return ERRORMESSAGE.NUMERIC_ADDRESS_LINE2;
+        }else if(isContainsOnlySpace(value)){
+            return ERRORMESSAGE.SPACEONLY_ADDRESS_LINE2;
+        }else if (isSpecialChar(value)){
+            return ERRORMESSAGE.SPLCHAR_ADDRESS_LINE2;
+        }else return ERRORMESSAGE.SUCESS;
+    }else return ERRORMESSAGE.SUCESS;
+}
+
+
+/**
+ * Function name: validateAddressLine1
+ *  Logic: Logic: This function is for validating the Pin code
+ */
+function validateAddressLine1(value){    
+    if(isEmpty(value)){       
+        return ERRORMESSAGE.BLANK_ADDRESS_LINE1;
+    }else{
+        if(isNumeric(value)){
+            return ERRORMESSAGE.NUMERIC_ADDRESS_LINE1;
+        }else if(isContainsOnlySpace(value)){
+            return ERRORMESSAGE.SPACEONLY_ADDRESS_LINE1;
+        }else if (isSpecialChar(value)){
+            return ERRORMESSAGE.SPLCHAR_ADDRESS_LINE1;
+        }else return ERRORMESSAGE.SUCESS;
+    }
+    return ERRORMESSAGE.SUCESS;
+}
+
+/**
+ * Function name: validateCity
+ *  Logic: Logic: This function is for validating the City
+ */
+function validateCity(value){
+    if(isEmpty(value)){
+        return ERRORMESSAGE.BLANK_CITY;
+    }else{
+        if(isNumeric(value)){
+            return ERRORMESSAGE.NUMERIC_CITY;
+        }else if(isContainsOnlySpace(value)){
+            return ERRORMESSAGE.SPACEONLY_CITY;
+        }else if(!isAlpha(value)){
+            return ERRORMESSAGE.INVALID_CITY;
+        }else if (isSpecialChar(value)){
+            return ERRORMESSAGE.SPLCHAR_CITY;
+        }else return ERRORMESSAGE.SUCESS;
+    }
+    return ERRORMESSAGE.SUCESS;
+}
+
+/**
+ * Function name: validateState
+ *  Logic: Logic: This function is for validating the State
+ */
+function validateState(value){
+    if(!isEmpty(value)){
+        if(isNumeric(value)){
+            return ERRORMESSAGE.NUMERIC_STATE;
+        }else if(isContainsOnlySpace(value)){
+            return ERRORMESSAGE.SPACEONLY_STATE;
+        }else if(!isAlpha(value)){
+            return ERRORMESSAGE.INVALID_STATE;
+        }else if (isSpecialChar(value)){
+            return ERRORMESSAGE.SPLCHAR_STATE;
+        }else return ERRORMESSAGE.SUCESS;
+    }else return ERRORMESSAGE.SUCESS;
+}
+
+/**
+ * Function name: validateCountry
+ *  Logic: Logic: This function is for validating the Country
+ */
+function validateCountry(value){
+    if(!isEmpty(value)){
+        if(isNumeric(value)){
+            return ERRORMESSAGE.NUMERIC_COUNTRY;
+        }else if(isContainsOnlySpace(value)){
+            return ERRORMESSAGE.SPACEONLY_COUNTRY;
+        }else if(!isAlpha(value)){
+            return ERRORMESSAGE.INVALID_COUNTRY;
+        }else if (isSpecialChar(value)){
+            return ERRORMESSAGE.SPLCHAR_COUNTRY;
+        }else return ERRORMESSAGE.SUCESS;
+    }else return ERRORMESSAGE.SUCESS;
+}
+
+/**
+ * Function name: validateSecretAnswer
+ *  Logic: Logic: This function is for validating the Secret Answer
+ */
+function validateSecAns(value){
+    if(!isEmpty(value)){
+        if(isContainsOnlySpace(value)){
+            return ERRORMESSAGE.SPACEONLY_SECANS;
+        }else if (isSpecialChar(value)){
+            return ERRORMESSAGE.SPLCHAR_SECANS;
+        }else return ERRORMESSAGE.SUCESS;
+    }else return ERRORMESSAGE.SUCESS;
+}
+
+
+/**
+ * Function name: validatePinCode
+ *  Logic: Logic: This function is for validating the Pin code
+ */
+
+function validatePinCode(value){
+    if(isEmpty(value)){
+        return ERRORMESSAGE.BLANK_PIN_CODE;
+    }else{
+        if(!isNumeric(value)){
+            return ERRORMESSAGE.NONNUNERIC_PIN_CODE;
+        }else if(!validateExactLength(value, 6)){
+            return ERRORMESSAGE.INVALID_PIN_CODE_LENGTH;        
+        }
+    }
+    return ERRORMESSAGE.SUCESS;
+}
+/**
+ * Function name: validateMobileNumber
+ *  Logic: This function is for validating the Mobile number
+ */
+
+function validateMobileNumber(value){
+    if(isEmpty(value)){
+        return ERRORMESSAGE.BLANK_MOBILE_NUMBER;
+    }else if(!isNumeric(value)){
+        return ERRORMESSAGE.INVALID_MOBILE_NUMBER;
+    }else if(!validateExactLength(value, 10)){
+        return ERRORMESSAGE.INVALID_MOBILE_NUMBER_LENGTH;
+    }else
+        return  ERRORMESSAGE.SUCESS;
+}
+
+function validateOptionalMobileNumber(value){
+    if(!isEmpty(value)){
+        if(!validateExactLength(value, 10)){
+            return ERRORMESSAGE.INVALID_MOBILE_NUMBER_LENGTH;
+        }
+        if(!isNumeric(value)){
+            return ERRORMESSAGE.INVALID_MOBILE_NUMBER;
+        }
+    }
+    return ERRORMESSAGE.SUCESS;
+}
+
+
+/**
+ * Function name: validateCVVNumber
+ *  Logic: This function is for validating all the manadatory fields in the page
+ */
+function validateCVVNumber(value){
+    if(isEmpty(value)){
+        return  ERRORMESSAGE.BLANK_CVV_NUMBER;
+    }else if(!isNumeric(value)){
+        return  ERRORMESSAGE.INVALID_CVV_NUMBER;
+    }else if(value.toLocaleString().length!=3){
+        return  ERRORMESSAGE.INVALID_CVV_LENGTH;
+    }else
+        return  ERRORMESSAGE.SUCESS;
+}
+
+/**
+ * Function name: validateCustomerFirstName
+ *  Logic: This function is for validating the card holder name
+ */
+function validateCustomerFirstName(value){
+    if(isEmpty(value)){
+        return ERRORMESSAGE.BLANK_CUSTOMER_FIRST_NAME ;
+    }else if(isContainsOnlySpace(value)){
+        return ERRORMESSAGE.SPACEONLY_CUSTOMER_FIRST_NAME;
+    }else if(!isAlphaWithoutSpace(value)){
+        return ERRORMESSAGE.INVALID_CUSTOMER_FIRST_NAME;
+    } else{
+        return ERRORMESSAGE.SUCESS;
+    }
+}
+
+/**
+ * Function name: validateCustomerMiddleName
+ *  Logic: This function is for validating Customer Middle Name
+ */
+function validateCustomerMiddleName(value){
+    if(isBlank(value)){
+        /*return ERRORMESSAGE.BLANK_CUSTOMER_MIDDLE_NAME ;*/
+    	return ERRORMESSAGE.SUCESS;
+    }else if(isContainsOnlySpace(value)){
+        return ERRORMESSAGE.SPACEONLY_CUSTOMER_MIDDLE_NAME;
+    }else if(!isAlphaWithoutSpace(value)){
+        return ERRORMESSAGE.INVALID_CUSTOMER_MIDDLE_NAME;
+    } else{
+        return ERRORMESSAGE.SUCESS;
+    }
+}
+
+
+/**
+ * Function name: validateCustomerLastName
+ *  Logic: This function is for validating the card holder name
+ */
+function validateCustomerLastName(value){
+    if(isEmpty(value)){
+        return ERRORMESSAGE.BLANK_CUSTOMER_LAST_NAME;
+    }else if(isContainsOnlySpace(value)){
+        return ERRORMESSAGE.SPACEONLY_CUSTOMER_LAST_NAME;
+    }else if(!isAlphaWithoutSpace(value)){
+        return ERRORMESSAGE.INVALID_CUSTOMER_LAST_NAME;
+    } else{
+        return ERRORMESSAGE.SUCESS;
+    }
+}
+/**
+ * Function name: validateCardHolderName
+ *  Logic: This function is for validating the card holder name
+ */
+function validateCardHolderName(value){
+    if(isEmpty(value)){
+        return ERRORMESSAGE.BLANK_CARD_HOLDER_NAME;
+    }else if(isContainsOnlySpace(value)){
+        return ERRORMESSAGE.SPACEONLY_CARD_HOLDER_NAME;
+    }else if(!isValidName(value)){
+        return ERRORMESSAGE.INVALID_CARD_HOLDER_NAME;
+    } else{
+        return ERRORMESSAGE.SUCESS;
+    }
+}
+//Commented on 17 Sep 2012 as to make the validation w.r.t. PG
+/*else if(isContainsApostropheOnly(value)){
+       return ERRORMESSAGE.SINGLEQUOTEDOT_CARD_HOLDER_NAME;
+     }else if(isContainsDotOnly(value)){
+       return ERRORMESSAGE.SINGLEQUOTEDOT_CARD_HOLDER_NAME;
+     }*/
+
+/**
+ * Function name: validateShortName
+ *  Logic: This function is for validating the card name
+ */
+
+//function validateShortName(value){
+//    if(isEmpty(value)){
+//        return ERRORMESSAGE.BLANK_CARD_NAME;
+//     }else if(isContainsOnlySpace(value)){
+//       return ERRORMESSAGE.SPACEONLY_CARD_NAME;
+//     }else if(!isAlphanumeric(value)){
+//         return ERRORMESSAGE.INVALID_CARD_NAME;
+//     }else{
+//       return ERRORMESSAGE.SUCESS;
+//     }
+//}
+
+
+function validateBillerRegistrationShortName(value) {
+    var regExr = /(?!^[&#]*$)^([A-Za-z0-9-'.,&@:?!_()$#/\\\d ]*)$/;
+    if(!isEmpty(value)){
+        //alert("isEmpty Check="+value);
+        if(isContainsOnlySpace(value)){
+            return ERRORMESSAGE.SPACEONLY_CARD_NAME;
+        }else if(!regExr.test(value)){
+            return ERRORMESSAGE.INVALID_CARD_NAME;
+        }else if(!isContainsAlpha(value)){
+            return ERRORMESSAGE.INVALID_CARD_NAME;
+        }else{
+            //alert("Sucess="+value);
+            return ERRORMESSAGE.SUCESS;
+        }
+    }else
+        return ERRORMESSAGE.SUCESS;
+}
+
+
+function validateShortName(value) {
+    var regExr = /(?!^[&#]*$)^([A-Za-z0-9-'.,&@:?!_()$#/\\\d ]*)$/;
+    if(isEmpty(value)){
+        //alert("isEmpty Check="+value);
+        return ERRORMESSAGE.BLANK_CARD_NAME;
+    }else if(isContainsOnlySpace(value)){
+        return ERRORMESSAGE.SPACEONLY_CARD_NAME;
+    }else if(!regExr.test(value)){
+        return ERRORMESSAGE.INVALID_CARD_NAME;
+    }else if(!isContainsAlpha(value)){
+        return ERRORMESSAGE.INVALID_CARD_NAME;
+    }else{
+        //alert("Sucess="+value);
+        return ERRORMESSAGE.SUCESS;
+    }
+}
+
+
+
+//End of Function validateShortName
+
+/**
+ * Function name: validateCardExpiryDate
+ *  Logic: This function is for validating all the manadatory fields in the page
+ */
+function validateCardExpiryDate(expMonth,expYear,cardIssuerAuth){   
+    if(isEmpty(expMonth) && isEmpty(expYear) && cardIssuerAuth=='MAESTRO'){
+        return ERRORMESSAGE.SUCESS;;//not compulsory for maestrocard
+    }else if(isEmpty(expMonth) || isEmpty(expYear) ){
+        return ERRORMESSAGE.BLANK_CARD_EXPIRY_DATE;
+    }else if(!isValidExpiryDate(expMonth,expYear)){
+        return ERRORMESSAGE.INVALID_CARD_EXPIRY_DATE;
+    } else{
+        return ERRORMESSAGE.SUCESS;
+    }
+}//End of Function validateCardExpiryDate
+
+/**
+ * Function name: validateCardNumber
+ *  Logic: This function is for validating entered card number
+ *  returns error messages as appropriate
+ */
+function validateCardNumber(value){
+    if(isEmpty(value)){
+        return ERRORMESSAGE.BLANK_CARD_NUMBER;
+    }else if(!isNumeric(value)){
+        return ERRORMESSAGE.NONNUMERIC_CARD_NUMBER;
+    }else if(!(validateExactLength(value.toLocaleString(), 16) ||
+        validateExactLength(value.toLocaleString(), 19))){
+        return ERRORMESSAGE.INVALID_CARD_NUMBER_LENGTH ;
+    }else if(!isValidCardNumber(getAccountType(value),value)){
+        return ERRORMESSAGE.INVALID_CARD_NUMBER;
+    }else{
+        return ERRORMESSAGE.SUCESS;
+    }
+}
+/**
+ * Function name: validateMasterCardNumber
+ *  Logic: This function is for validating entered card number
+ *  returns error messages as appropriate
+ */
+function validateMasterCardNumber(value){
+    if(isEmpty(value)){
+        return ERRORMESSAGE.BLANK_CARD_NUMBER;
+    }else if(!isNumeric(value)){
+        return ERRORMESSAGE.NONNUMERIC_MC_CARD_NUMBER;
+    }else if(!validateExactLength(value.toLocaleString(), 16)){
+        return ERRORMESSAGE.INVALID_MC_CARD_NUMBER_LENGTH ;
+    //     }else if(!isValidCardNumber(getAccountType(value),value)){
+    //         return ERRORMESSAGE.INVALID_CARD_NUMBER;
+    }else{
+        return ERRORMESSAGE.SUCESS;
+    }
+}
+/**
+ * Function name: validateMaestroCardNumber
+ *  Logic: This function is for validating entered card number
+ *  returns error messages as appropriate
+ */
+function validateMaestroCardNumber(value,cardIssuerBank){   
+    if(isEmpty(value)){
+        return ERRORMESSAGE.BLANK_CARD_NUMBER;
+    }
+    if(cardIssuerBank=='SBIME'){        
+        if(!validateExactLength(value.toLocaleString(),19)){
+            return ERRORMESSAGE.INVALID_SBI_CARD_NUMBER_LENGTH ;
+        }
+        if(!isNumeric(value)){
+            return ERRORMESSAGE.NONNUMERIC_MA_SBI_CARD_NUMBER;
+        }
+    }else {
+        if(!validateLengthRange(value.toLocaleString(),16,19)){
+            return ERRORMESSAGE.INVALID_NSBI_CARD_NUMBER_LENGTH ;        
+        }
+        if(!isNumeric(value)){
+            return ERRORMESSAGE.NONNUMERIC_MA_NSBI_CARD_NUMBER;
+        }
+    }
+    return ERRORMESSAGE.SUCESS;     
+}
+/**
+ * Function name: validatePaymentAmount
+ *  Logic: This function is for validating entered Payment amount
+ *  returns error messages as appropriate
+ */
+function validatePaymentAmount(value){    
+    if(isEmpty(value)){       
+        return ERRORMESSAGE.BLANK_PAYMENT_AMOUNT;
+    }else if(!isAmount(value)){
+        return ERRORMESSAGE.INVALID_PAYMENT_AMOUNT;
+    }else if(isContainsDotAndZeroOnly(value)){
+        return ERRORMESSAGE.INVALID_PAYMENT_AMOUNT_ZERO;
+    }else{
+        return ERRORMESSAGE.SUCESS;
+    }
+}
+
+/**
+ * Function name: validateCreditCardNumber
+ *  Logic: This function takes the type of account,creditcard number as the paramter and returns 
+ *  true or false based on the validity of the card.   
+ */  
+function isValidCardNumber(acctyp, value) {
+    var regExIsMasterCard = /^5[1-5]\d{14}$/;
+    var regExMaestro = /^(311|367|[5-6][0-9][0-9][0-9])\d{8,18}$/;
+    if (acctyp == "001") {
+        return regExIsMasterCard.test(value);
+    }else if (acctyp == "002") {
+        return regExMaestro.test(value);
+    }else {		
+        return false;
+    }
+}
+
+/**
+ * Function name: getAccountType Logic: This function takes the creditcard
+ * number and debit card number as a paramter and returns the type of account.
+ */
+function getAccountType(value) {
+    var acctTypeCd;
+    //var ccFirstOneDigit    = value.substring(0, 1);
+    var ccFirstTwoDigits   = value.substring(0, 2);
+    var ccFirstThreeDigits = value.substring(0, 3);
+ 
+    // MasterCard 51-55
+    if ((ccFirstTwoDigits == "51")
+        || (ccFirstTwoDigits == "52")
+        || (ccFirstTwoDigits == "53")
+        || (ccFirstTwoDigits == "54")
+        || (ccFirstTwoDigits == "55")) {
+        acctTypeCd = "001";
+        return acctTypeCd;
+    }
+    if( (ccFirstThreeDigits=="311") ||
+        (ccFirstThreeDigits=="367")){
+        acctTypeCd = "002";
+        return acctTypeCd;
+    }
+    else {
+        acctTypeCd = "000";
+        return acctTypeCd;
+    }
+}
+
+//Check alphabates with single space
+function isValidOnlyAlphabates(value){
+    var regex = /^[a-zA-Z\s{1}]$/;
+    return (regex.test(value));
+}
+                         
+/**
+ * Function name: isEmpty
+ *  Logic: This function takes the content as the paramter and returns boolean value of 
+ *  true or false based on is the content is empty 
+ */
+
+function isEmpty(value){
+    if (value==""||value=="-1" ||value=="0" ){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+/**
+ * Function name: isContainsComma*/
+function isContainsComma(value){
+    if(value.indexOf(',')!=-1){
+        return true;
+    }else{
+        return false;
+    }
+}
+/**
+ * Function name: validatePhoneNumber
+ *  Logic: This function takes the home phone number as the paramter and returns
+ *  the appropriate error messages
+ */
+
+function validatePhoneNumber(value) {
+    if(isEmpty(value)){
+        return ERRORMESSAGE.BLANK_HOME_PHONE_NO;
+    }else if(!isNumeric(value)){
+        return ERRORMESSAGE.NONNUNERIC_HOME_PHONE_NO;
+    }else if(!validateLengthRange(value, 5, 8)){
+        return ERRORMESSAGE.INVALID_HOME_PHONE_NO_LENGTH;
+    }else
+        return  ERRORMESSAGE.SUCESS;
+	
+}
+/**
+ * Function name: validateSTDCode
+ *  Logic: This function takes the STD Code as the paramter and returns
+ *  the appropriate error messages
+ */
+
+function validateSTDCode(value) {
+    if(isEmpty(value)){
+        return ERRORMESSAGE.BLANK_STD_CODE;
+    }else if(!isNumeric(value)){
+        return ERRORMESSAGE.NONNUNERIC_STD_CODE;
+    }else if(!validateLengthRange(value, 2, 5)){
+        return ERRORMESSAGE.INVALID_STD_CODE_LENGTH;
+    }else
+        return  ERRORMESSAGE.SUCESS;
+
+}
+
+/**
+ * Function name: validateSTDCode
+ *  Logic: This function takes the STD Code as the paramter and returns
+ *  the appropriate error messages
+ */
+
+function validatePhoneCountryCode(value) {
+    if(isEmpty(value)){
+        return ERRORMESSAGE.BLANK_COUNTRY_CODE;
+    }else if(!isNumeric(value)){
+        return ERRORMESSAGE.NONNUNERIC_COUNTRY_CODE;
+    }else if(!validateExactLength(value, 2)){
+        return ERRORMESSAGE.INVALID_COUNTRY_CODE_LENGTH;
+    }else
+        return  ERRORMESSAGE.SUCESS;
+
+}
+
+/**
+ * Function name: validateExactLength
+ *  Logic: This function takes the string and the length as the parameter
+ *  and validate if the string is of exact length or not
+ *  returns true or false based on the match
+ */
+function validateExactLength(value, ValueLength){
+    if(ValueLength != value.length){
+        return false;
+    } else{
+        return true;
+    }
+}//End of function  validateExactLength
+/**
+ * Function name: validateExactLength
+ *  Logic: This function takes the string and the length as the parameter
+ *  and validate if the string is of exact length or not
+ *  returns true or false based on the match
+ */
+function validateLengthRange(value, minLength, maxLength){
+    if(value.length < minLength || value.length > maxLength){
+        return false;
+    } else{
+        return true;
+    }
+}//End of function  validateExactLength
+
+/**
+ * Function name: isValidEmail
+ *  Logic: This function to validate the input string as valid email address
+ *  returns true or false based on the match
+ */
+
+function isValidEmail(value){
+    //var regExIsValidEmailAddress = /^[a-z0-9-!#$%.^&*()\\+><]+([a-z])@[a-z-]+(\.[a-z0-9-]+)*(\.[a-z]{1,10})$/;
+    var regex = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+    return regex.test(value);
+}//End of function  validateEmail
+
+/**
+ * Function name: validateYear
+ *  Logic: This function takes the year as the paramter and returns boolean value of 
+ *  true or false based on if the year is valid 
+ */
+function validateYear(value){
+    var yearLength=4;
+    if(value==null || value=== undefined || value.trim()==''  ){
+        return false;
+    }
+    if (!isNumeric(value)){
+        return false;
+    }	
+    if(value.length!=yearLength) {
+        return false;
+    }	
+    return true;
+}
+
+
+function isAlphaWithoutSpace(value){
+    var regex =  /^[a-zA-z]*(\[a-zA-z]+)?$/;
+    if(isEmpty(value)){
+        return true;
+    }
+    if (!regex.test(value)){
+        return false;
+    }
+    return true;
+}
+
+function isAlpha(value){
+    var regex =  /^[a-zA-z ]*(\[a-zA-z ]+)?$/;
+    if(isEmpty(value)){
+        return true;
+    }
+    if (!regex.test(value)){
+        return false;
+    }
+    return true;
+}
+
+/**
+ * Function name: isAlphanumeric
+ *  Logic: This function takes the value as the paramter and returns boolean value of 
+ *  true or false based on is the value valid
+ */
+function isAlphanumeric(value)
+{  
+    if (!isAlphaNumericWithoutSpecialChar(value)){
+        return false;
+    }
+    return true;
+//return !(value.charAt(0) == " " || value.charAt(value.length - 1) == " ");
+}
+
+function isAlphaNumericWithoutSpace(value){
+    var regex=/^[a-zA-Z0-9]*$/;
+    if (!regex.test(value)){
+        return false;
+    }	
+    return true;		
+}
+                       
+
+/*
+ Function Name : isValidExpDate
+ Description : validates credit card expiration month and year
+ */
+function isValidExpiryDate(selectedMonth,selectedYear){
+    currentFullDate = new Date();
+    CURRENTDATE.currentDay = currentFullDate.getDate();
+    CURRENTDATE.currentMonth = currentFullDate.getMonth();
+    CURRENTDATE.currentYear = currentFullDate.getFullYear();
+    if(selectedYear>CURRENTDATE.currentYear){
+        return true;
+    }else if(selectedYear==CURRENTDATE.currentYear){
+        if(selectedMonth>=CURRENTDATE.currentMonth+1)
+        {
+            return true;
+        }else{
+            return false;
+        }
+    }else{
+        return false;
+    }
+}
+/**Function Name:validateDate
+ * Logic :This function accespts date,month and year selected by the user as expiry date
+ * (in integer format i.e
+ * if you get the string then parse that string to int and then pass to this function).
+ * This function returns false if  the user selected  date using a date picker
+ * is greater than the current date.
+ *
+*/
+function validateDate(year,month,day,hour,min,amPm)
+{
+    var todaysDate=new Date();
+    var todayYear=todaysDate.getFullYear();
+    var todayMonth=todaysDate.getMonth();
+    var todayDay=todaysDate.getDate();
+    var todayHours=todaysDate.getHours();
+    var currentAmPm="AM";
+    
+    if(todayHours>12)
+        currentAmPm="PM";
+    
+    //Hours receiving in this method is in 1-12 format,Javascript returns in 24 format.
+    if(amPm=="PM")
+        if(todayHours>12)
+            todayHours=todayHours-12;
+    
+    var todayMinutes=todaysDate.getMinutes();
+
+    if(year>todayYear)
+        return false;
+    
+    if(year==todayYear)
+    {
+        if(month>todayMonth)
+            return false;
+	  
+        if(month==todayMonth)
+        {
+            if(day>todayDay)
+                return false;
+	      	
+            if(day==todayDay)
+            {
+                /**This condition is added as date time is received in 12 hour format from android date picker plugin.
+	      	     */
+                if(amPm=="PM" && currentAmPm=="AM")
+                    return false;
+	      	     
+                if(hour>todayHours)
+                    return false;
+       
+                if(hour==todayHours)
+                {
+                    if(min>todayMinutes)
+                        return false;
+        	   	    
+                }
+            }
+        }
+    }	
+    
+    return true;
+    
+}
+
+/**
+ * This function will validate if the passed argument contains decimal values
+**/
+function isDecimal(value){
+    var regExIsDecimal =  /^\s*(\+|-)?((\d+(\.\d+)?)|(\.\d+))\s*$/;
+    return (regExIsDecimal.test(value));
+}
+
+/**
+ * This function will validate if the passed argument contains decimal values
+**/
+function isAmount(value){
+    //var regExIsDecimal =  /^\s*(\+|-)?((\d+(\.\d+)?)|(\.\d+))\s*$/;
+    var regExIsDecimal =  /^(?:\d*\.\d{1,2}|\d+)$/;
+    return (regExIsDecimal.test(value));
+}
+
+/**
+ * This function will validate if the String contains atleast single apostrophe
+**/
+function isContainsApostropheOnly(value){
+    var regExr = /^[' '']*$/;
+    //alert("In Function isContainsDotAndZero"+ regExr.test(value));
+    return (regExr.test(value));
+}
+
+/**
+ * This function will validate if the String contains atleast single dot
+**/
+function isContainsDotOnly(value){
+    var regExr = /^[. '']*$/;
+    //alert("In Function isContainsDotAndZero"+ regExr.test(value));
+    return (regExr.test(value));
+}
+
+/**
+ * This function will validate if the passed argument contains numeric values
+**/
+function isNumeric(value){
+    //var regExIsNumber = /^[0-9]*(\.[0-9]+)?$/;
+    var regExIsNumber = /^\d+$/;
+    return (regExIsNumber.test(value));
+}
+/**
+ * This function will validate if the passed argument contains special Characters only
+**/
+function isSpecialChar(value)//  check for valid Special Character strings
+{
+    var strValidChars = "!@#$%^&*_?+=-~`':{}<>[]\\;|\".";
+    var strChar;
+    var blnResult = true;
+    if (value.length == 0) return false;
+    for (i = 0; i < value.length && blnResult == true; i++)
+    {
+        strChar = value.charAt(i);
+        if (strValidChars.indexOf(strChar) == -1)
+        {
+            blnResult = false;
+        }
+    }
+    return blnResult;
+}
+/**
+ * This function will validate the LOGIN ID
+**/
+
+function validateLoginId(value) {
+    //var regExr = /(?!^[&#]*$)^([A-Za-z0-9-'.,&@:?!_()$#/\\]*)$/;  /^[a-zA-Z.'\s]*$/
+    var regExr = /^([A-Za-z0-9-.@_]*)$/;
+    if(isEmpty(value)){
+        //alert("isEmpty Check="+value);
+        return ERRORMESSAGE.BLANK_LOGIN_ID;
+    }else if(!validateLengthRange(value, 7, 20)){
+        //alert("validateLengthRange="+value);
+        return ERRORMESSAGE.INVALID_LOGIN_ID_LENGTH;
+    }
+    else if(!regExr.test(value)){
+        return ERRORMESSAGE.INVALID_LOGIN_ID;
+    }else if(!isContainsAlpha(value)){
+        return ERRORMESSAGE.INVALID_LOGIN_ID;
+    }
+    else if(isContainsSpace(value)){
+        return ERRORMESSAGE.INVALID_LOGIN_SPACE;
+    }else{
+        //alert("Sucess="+value);
+        return ERRORMESSAGE.SUCESS;
+    }
+}
+
+
+function isNumericKey(e)
+{
+    if (window.event) {
+        var charCode = window.event.keyCode;
+    }
+    else if (e) {
+        var charCode = e.which;
+    }
+    else {
+        return true;
+    }
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}
+
+/**
+ * This function will validate the Password
+**/
+
+//function validatePassword(value) {
+//   if(isEmpty(value))
+//        return ERRORMESSAGE.BLANK_PASSWORD;
+//    else if(!validateLengthRange(value, 7, 20))
+//        return ERRORMESSAGE.INVALID_PASSWORD_LENGTH;
+//    else if(!validateAlphanumericWithoutSpace(value)&&
+//            isNumeric(value)&&
+//                isAlpha(value)&&
+//                    isSpecialChar(value))
+//        return ERRORMESSAGE.INVALID_PASSWORD;
+//    else
+//       return  ERRORMESSAGE.SUCESS;
+//
+//}
+
+
+/**
+ * This function will validate if the String contains spaces
+**/
+function isContainsSpace(value){
+    var regExr = /^.* .*$/;
+    return (regExr.test(value));
+}
+
+/**
+ * This function will validate if the String contains atleast single Alphabets
+**/
+function isContainsDotAndZeroOnly(value){
+    var regExr = /^[0.]*$/;
+    //alert("In Function isContainsDotAndZero"+ regExr.test(value));
+    return (regExr.test(value));
+}
+
+
+/**
+ * This function will validate if the String contains atleast single Alphabets
+**/
+function isContainsAlpha(value){
+    var regExr = /^.*[A-Za-z].*$/;
+    return (regExr.test(value));
+}
+
+function isContainsOnlySpace(value){
+    //value = trim(value);
+    value = value.replace(/^\s+|\s+$/g,'')
+
+    if(value.length == 0 ){
+        return true;
+    }else
+        return false;
+}
+
+
+/**
+ *This function is different to validate password using regex
+ *It accepts a combination of alphabets and numbers  only.
+ *Range has been specified.
+ *Will not accept spaces.
+ *Special charactes are accepted but not mandatory
+ **
+*/
+function isAlphaNumSpecialCharWithSpace(value){
+    var regExr = /^.*(?=.*\d)(?=.*[a-zA-Z]).*$/;
+    if(isEmpty(value)){
+        //alert("isEmpty Check="+value);
+        return ERRORMESSAGE.BLANK_PASSWORD;
+    }else if(!validateLengthRange(value, 7, 20)){
+        //alert("validateLengthRange="+value);
+        return ERRORMESSAGE.INVALID_PASSWORD_LENGTH;
+    }else if(!regExr.test(value)){
+        //alert("!regExr.test(value)="+value);
+        return ERRORMESSAGE.INVALID_PASSWORD;
+    }else  if(isContainsSpace(value)){
+        //            alert("isContainsSpace="+value);
+        return ERRORMESSAGE.INVALID_PASSWORD_SPACE;
+    } else{
+        //alert("Sucess="+value);
+        return ERRORMESSAGE.SUCESS;
+    }
+}
+/**
+ * This function will validate if the passed argument contains valid name 
+ * ie. Alphabets, dot (.) and apostrophe (')
+**/
+function isValidName(value){
+    //    	var regExIsValidName = /^[a-zA-Z.'\s]*$/;
+    var regExIsValidName = /^[a-zA-Z\s]*$/;
+    return (regExIsValidName.test(value));
+}
+
+/**
+ * This function will validate if the passed argument contains valid alpha numeric value
+ * without special characters
+**/
+function isAlphaNumericWithoutSpecialChar(value){
+    var regExIsAlphaNumericWithoutSpecialChar = /^[a-zA-Z\d ]+$/;
+    return (regExIsAlphaNumericWithoutSpecialChar.test(value));
+}
+
+
+function isDate(value)
+{
+    alert("in function...."+value);
+    var dteDate;
+    obj1 = value.split("/");
+    obj1[0] = parseInt(obj1[0], 10); //for javascript 0=>January!
+    obj1[1] = parseInt(obj1[1], 10)-1;
+    obj1[2] = parseInt(obj1[2], 10);
+    dteDate=new Date(obj1[2], obj1[1], obj1[0]);
+    alert("date: "+dteDate);
+    return ((obj1[0]==dteDate.getDate()) && (obj1[1]==dteDate.getMonth()) && (obj1[2]==dteDate.getFullYear()));
+}
+
+/**Function Name:isFutureDate
+* Logic :This function accespts date,month and year selected by the user as DOB date
+* (in integer format i.e
+* if you get the string then parse that string to int and then pass to this function).
+* This function returns true if  the user selected  date using a date picker
+* is greater than the current date.
+*/
+
+function isFutureDate(value)
+{
+    //alert("In Future date function"+value);
+    var dteDate;
+    var now = new Date();
+    obj1 = value.split("/");
+    obj1[0] = parseInt(obj1[0], 10);
+    obj1[1] = parseInt(obj1[1], 10)-1;
+    obj1[2] = parseInt(obj1[2], 10);
+    dteDate=new Date(obj1[2], obj1[1], obj1[0]);
+    //alert("now"+now > dteDate);
+    if( now < dteDate){
+        return ERRORMESSAGE.INVALID_DOB;
+    }
+    return ERRORMESSAGE.SUCESS;
+}
+
+
+function validateAddress(value){
+    if(!isEmpty(value)){
+        if(isNumeric(value)){
+            return ERRORMESSAGE.NUMERIC_ADDRESS;
+        }else if(isContainsOnlySpace(value)){
+            return ERRORMESSAGE.SPACEONLY_ADDRESS;
+        }else if (isSpecialChar(value)){
+            return ERRORMESSAGE.SPLCHAR_ADDRESS;
+        }else return ERRORMESSAGE.SUCESS;
+    }else return ERRORMESSAGE.SUCESS;
+}
+
+function Showpop(requestType) {
+    window.open('print_pop.jsp?msg=<%=paymentRequestBean%>','_blank','width=750px, height=600px, left=140px, top=80px');
+/*var challan = "true";
+	if(challan == requestType){
+		alert("request is for challan");
+	} else {
+		window.open('printPOP.jsp?msg=<%=paymentRequestBean%>','_blank','width=750px, height=380px, left=140px, top=80px');
+	}*/
+}
+
+
+
+
+
+
+/*	functions which are used for course selection things	*/
+
+
+function loadCmbBranchList(instituteBranchMap,instituteConfigBean,selectedValue){
+    var options = '<option value="-1">--- Select ---</option>';   
+    $.each(instituteBranchMap, function(key, value){       
+        if(value==selectedValue){
+            options += '<option value="' + key + '" selected="selected">' + value + '</option>\n';
+        } else {
+            options += '<option value="' + key + '">' + value + '</option>\n';
+        }
+    })
+    $("select#cmbBranchList").html(options);
+    return true;
+}
+function loadCmbCourse(mapCourseList,instituteConfigBean,selectedValue){
+    var options = '<option value="-1">--- Select ---</option>';
+    $.each(mapCourseList, function(key, value){
+        if(key==selectedValue){
+            options += '<option value="' + key + '" selected="selected">' + value + '</option>\n';
+        } else {
+            options += '<option value="' + key + '">' + value + '</option>\n';
+        }
+    })
+    $("select#cmbCourse").html(options);
+    return true;
+}
+
+
+function loadCmbCourseDetails(mapCourseDetailsList,instituteConfigBean,selectedValue){
+    var options = '<option value="-1" selected>--- Select ---</option>';
+    $.each(mapCourseDetailsList, function(key, value){
+        if(key==selectedValue){
+            options += '<option value="' + key + '" selected>' + value + '</option>\n';
+        } else {
+            options += '<option value="' + key + '">' + value + '</option>\n';
+        }
+    })
+    $("select#cmbCourseDetails").html(options);
+    return true;
+}
+
+function loadCmbCourseType(mapCourseTypeList,instituteConfigBean,selectedValue){
+	var errors = document.getElementById("errors");
+	if(true) {
+		var options = '<option value="-1" selected>--- Select ---</option>';
+		var defaultSelectionFlag = false;
+		var defaultSelectionExist = false;
+		$.each(mapCourseTypeList, function(key, value){
+			if(instituteConfigBean.courseTypeFlag) {
+				
+			} else {
+				selectedValue = instituteConfigBean.courseTypeDefaultValue;
+				defaultSelectionFlag = true;
+			}
+			if(key == selectedValue){
+				options += '<option value="' + key + '" selected>' + value + '</option>\n';
+				defaultSelectionExist = true;
+			}
+			else{
+				options += '<option value="' + key + '">' + value + '</option>\n';
+			}
+		})
+		if(instituteConfigBean.courseTypeFlag) {
+			
+		} else {
+			if(defaultSelectionExist) {
+				/*	default selection value exist we can continue with the configuration	*/
+			} else {
+				/*	default selection is not exist, need to configure it	*/
+				//alert("Something wrong with the loadCmbCourseType" + ", configuration issue is there");
+				errors.innerHTML = ERRORMESSAGE.NO_CONFIGURATION_FOUND_FOR_YOUR_SELECTION;
+			}
+		}
+		$("select#cmbCourseType").html(options);
+	}
+	
+	if(false) {
+	    if(instituteConfigBean.courseTypeFlag) {
+			var options = '<option value="-1" selected>--- Select ---</option>';
+			$.each(mapCourseTypeList, function(key, value){
+				if(key==selectedValue){
+					options += '<option value="' + key + '" selected>' + value + '</option>\n';
+				} else {
+					options += '<option value="' + key + '">' + value + '</option>\n';
+				}
+			})
+			$("select#cmbCourseType").html(options);
+		} else {
+			$("#cmbCourseType").val(instituteConfigBean.courseTypeDefaultValue);
+			alert("instituteConfigBean.courseTypeFlag : - " + instituteConfigBean.courseTypeFlag);
+		}
+	}
+    /*alert("instituteConfigBean.courseTypeFlag : - " + instituteConfigBean.courseTypeFlag);
+    alert("instituteConfigBean.courseTypeDefaultValue : - " + instituteConfigBean.courseTypeDefaultValue);*/
+}
+function loadCmbCoursePattern(mapCoursePatternList,instituteConfigBean,selectedValue){
+	var errors = document.getElementById("errors");
+	if(true) {
+		var options = '<option value="-1">--- Select ---</option>';
+		var defaultSelectionFlag = false;
+		var defaultSelectionExist = false;
+		$.each(mapCoursePatternList, function(key, value){
+			if(instituteConfigBean.coursePatternFlag) {
+				
+			} else {
+				selectedValue = instituteConfigBean.coursePatternDefaultValue;
+				defaultSelectionFlag = true;
+			}
+			if(key==selectedValue){
+				options += '<option value="' + key + '" selected>' + value + '</option>\n';
+				defaultSelectionExist = true;
+			}
+			else{
+				options += '<option value="' + key + '">' + value + '</option>\n';
+			}
+		})
+		if(instituteConfigBean.coursePatternFlag) {
+			
+		} else {
+			if(defaultSelectionExist) {
+				/*	default selection value exist we can continue with the configuration	*/
+			} else {
+				/*	default selection is not exist, need to configure it	*/
+				//alert("Something wrong with the loadCmbCoursePattern" + ", configuration issue is there");
+				errors.innerHTML = ERRORMESSAGE.NO_CONFIGURATION_FOUND_FOR_YOUR_SELECTION;
+			}
+		}
+		$("select#cmbCoursePattern").html(options);
+	}
+	
+	
+	if(false) {
+	    if(instituteConfigBean.coursePatternFlag) {
+			var options = '<option value="-1">--- Select ---</option>';
+			$.each(mapCoursePatternList, function(key, value){
+				if(key==selectedValue){
+					options += '<option value="' + key + '" selected>' + value + '</option>\n';
+				} else {
+					options += '<option value="' + key + '">' + value + '</option>\n';
+				}
+			})
+			$("select#cmbCoursePattern").html(options);
+		} else {
+			$("#cmbCoursePattern").val(instituteConfigBean.coursePatternDefaultValue);
+			/*alert("instituteConfigBean.coursePatternFlag : - " + instituteConfigBean.coursePatternFlag);*/
+		}
+	}
+    /*alert("instituteConfigBean.coursePatternFlag : - " + instituteConfigBean.coursePatternFlag);
+    alert("instituteConfigBean.coursePatternDefaultValue : - " + instituteConfigBean.coursePatternDefaultValue);*/
+}
+function loadCmbCourseTerm(mapCourseTermList,instituteConfigBean,selectedValue){
+	var errors = document.getElementById("errors");
+	if(true) {
+		var options = '<option value="-1">--- Select ---</option>';
+		var defaultSelectionFlag = false;
+		var defaultSelectionExist = false;
+		$.each(mapCourseTermList, function(key, value){
+			if(instituteConfigBean.courseTermFlag) {
+				
+			} else {
+				selectedValue = instituteConfigBean.courseTermDefaultValue;
+				defaultSelectionFlag = true;
+			}
+			
+			if(key == selectedValue){
+				options += '<option value="' + key + '" selected>' + value + '</option>\n';
+				defaultSelectionExist = true;
+			}
+			else{
+				options += '<option value="' + key + '">' + value + '</option>\n';
+			}
+		})
+		if(instituteConfigBean.courseTermFlag) {
+			
+		} else {
+			if(defaultSelectionExist) {
+				/*	default selection value exist we can continue with the configuration	*/
+			} else {
+				/*	default selection is not exist, need to configure it	*/
+				//alert("Something wrong with the loadCmbCourseTerm" + ", configuration issue is there");
+				errors.innerHTML = ERRORMESSAGE.NO_CONFIGURATION_FOUND_FOR_YOUR_SELECTION;
+			}
+		}
+		$("select#cmbCourseTerm").html(options);
+	}
+	
+	if(false) {
+	    if(instituteConfigBean.courseTermFlag) {
+			var options = '<option value="-1">--- Select ---</option>';
+			$.each(mapCourseTermList, function(key, value){
+				
+				if(key == selectedValue){
+					options += '<option value="' + key + '" selected>' + value + '</option>\n';
+				} else {
+					options += '<option value="' + key + '">' + value + '</option>\n';
+				}
+			})
+			$("select#cmbCourseTerm").html(options);
+		} else {
+			
+			$("#cmbCourseTerm").val(instituteConfigBean.courseTermDefaultValue);
+			alert("instituteConfigBean.courseTermFlag : - " + instituteConfigBean.courseTermFlag);
+			alert("instituteConfigBean.courseTermDefaultValue : - " + instituteConfigBean.courseTermDefaultValue);
+			alert($("#cmbCourseTerm").val());
+		}
+	}
+    /*alert("instituteConfigBean.courseTermFlag : - " + instituteConfigBean.courseTermFlag);
+    alert("instituteConfigBean.courseTermDefaultValue : - " + instituteConfigBean.courseTermDefaultValue);*/
+}
+
+function showHideDiv(val,arrElementID){
+    var i=0;
+    if(!isEmpty(val)) {
+        for( i=0;i<arrElementID.length;i++) {
+            document.getElementById(arrElementID[i]).style.display="block";
+        }
+    } else {
+        for( i=0;i<arrElementID.length;i++) {
+            document.getElementById(arrElementID[i]).style.display="none";
+        }
+    }
+    return true;
+}
+
+
+function resetCourseContents(n){
+    var  STUDENT_ALIAS_RESET=1;
+    var  BRANCH_RESET=2;
+    var COURSE_RESET=3;
+    var  COURSE_DETAILS_RESET=4;
+    
+    switch(n)
+    {
+        case STUDENT_ALIAS_RESET:
+            document.getElementById("studentName").value='';
+            document.getElementById("cmbBranchList").value=-1;
+
+        case BRANCH_RESET:
+            document.getElementById("cmbCourse").value=-1;
+
+        case COURSE_RESET:
+            document.getElementById("cmbCourseDetails").value=-1;
+
+        case COURSE_DETAILS_RESET:
+            document.getElementById("cmbCourseType").value=-1;
+            document.getElementById("cmbCoursePattern").value=-1;
+            document.getElementById("cmbCourseTerm").value=-1;
+    }
+}
+
+
+
+function isBlank(value){
+    if (value == "" || value == null){
+        return true;
+    }else{
+        return false;
+    }
+}

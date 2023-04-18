@@ -1,0 +1,491 @@
+const moengageEnabledURLs = [
+  "https://www.adda247.com",
+  "https://betastore.adda247.com",
+  "http://store.adda247.com",
+  "https://store.adda247.com",
+  "https://www.store.adda247.com",
+  "https://store-prod2.adda247.com",
+  "https://alphastore.adda247.com"
+];
+const moengageDisableRLs = [
+  "jobs",
+  "school",
+  "entrance-exam",
+  "upsc-exam",
+  "nra-cet",
+  "bn",
+  "ta",
+  "te",
+  "ml",
+  "mr"
+];
+var first = location.pathname;
+first.indexOf(1);
+first.toLowerCase();
+first = first.split("/")[1];
+
+let isMoeEnabled = false;
+var isLocalUniqueID = false;
+
+if (moengageEnabledURLs.indexOf(location.origin) > -1) {
+  isMoeEnabled = true;
+}
+
+if (moengageDisableRLs.indexOf(first) > -1) {
+  isMoeEnabled = false;
+}
+
+if (isMoeEnabled) {
+  (function(i, s, o, g, r, a, m, n) {
+    i.moengage_object = r;
+    t = {};
+    q = function(f) {
+      return function() {
+        (i.moengage_q = i.moengage_q || []).push({ f: f, a: arguments });
+      };
+    };
+    (f = [
+      "track_event",
+      "add_user_attribute",
+      "add_first_name",
+      "add_last_name",
+      "add_email",
+      "add_mobile",
+      "add_user_name",
+      "add_gender",
+      "add_birthday",
+      "destroy_session",
+      "add_unique_user_id",
+      "moe_events",
+      "call_web_push",
+      "track",
+      "location_type_attribute"
+    ]),
+      (h = { onsite: ["getData"] });
+    for (k in f) {
+      t[f[k]] = q(f[k]);
+    }
+    a = s.createElement(o);
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m);
+    i.moe =
+      i.moe ||
+      function() {
+        n = arguments[0];
+        return t;
+      };
+    a.onload = function() {
+      if (n) {
+        i[r] = moe(n);
+      }
+    };
+  })(
+    window,
+    document,
+    "script",
+    "https://cdn.moengage.com/webpush/moe_webSdk.min.latest.js",
+    "Moengage"
+  );
+}
+
+var logStatus;
+var arrProdEnv = [
+  "http://store.adda247.com",
+  "https://store.adda247.com",
+  "https://www.store.adda247.com",
+  "https://www.adda247.com",
+  "https://www.careerpower.in",
+  "https://www.adda247.in",
+  "https://www.sscadda.com",
+  "https://currentaffairs.adda247.com",
+  "https://www.bankersadda.com",
+  "https://hindi.bankersadda.com",
+  "https://www.teachersadda.com",
+  "https://defence.adda247.com",
+  "https://info.adda247.com/",
+  "http://www.bankersadda.com",
+  "https://www.bankersadda.com",
+  "https://staging.teachersadda.com",
+  "https://www.bankersadda.com",
+  "https://www.teachersadda.com",
+  "https://www.sscadda.com",
+  "https://www.engineersadda.co",
+  "https://currentaffairs.adda247.com",
+  "https://stg.hindi.sscadda.com",
+  "https://stg.bankersadda.com",
+  "https://stg.teachersadda.com",
+  "https://stg.sscadda.com",
+  "https://stg.engineersadda.co",
+  "https://stg.currentaffairs.adda247.com",
+  "https://stg.hindi.sscadda.com",  
+];
+
+var pushDomainUrl = "https://info.adda247.com/index.html";
+if (arrProdEnv.indexOf(location.origin) >= 0) logStatus = 0;
+else logStatus = 1;
+if (isMoeEnabled) {
+  Moengage = moe({
+    app_id: "K8GPTWLR90JVA3LUB477MRG7",
+    debug_logs: logStatus
+  });
+}
+function createLocalCookie(name, value, days, domain) {
+  if (days) {
+    var date = new Date();
+    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+    var expires = "; expires=" + date.toGMTString();
+  } else var expires = "";
+
+  if(window.location.host=="www.adda247.com"){
+    domain="adda247.com";
+  }
+
+
+  document.cookie =
+    name +
+    "=" +
+    value +
+    expires +
+    "; path=/;" +
+    (domain ? "domain=" + domain : "");
+}
+
+function getLocalCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(";");
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == " ") {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+//Moengage.track_event("pg_view");
+var iFrameOrigin = "https://www.adda247.in";
+var iframeSource = iFrameOrigin + "/iFrame-window-prod.html";
+
+// Create the iframe
+var iframe = document.createElement("iframe");
+iframe.setAttribute("src", iframeSource);
+iframe.setAttribute("id", "the_iframe");
+iframe.style.width = 450 + "px";
+iframe.style.height = 200 + "px";
+iframe.style.display = "none";
+var iframeEl;
+document.onreadystatechange = function() {
+  if (!iframeEl) {
+    document.body.appendChild(iframe);
+    iframeEl = document.getElementById("the_iframe");
+    iframeEl.onload = function() {
+      if (
+        location.search.indexOf("file=") >= 0 &&
+        location.search.indexOf(".doc") >= 0 &&
+        location.search.indexOf("param") >= 0
+      ) {
+        updateUserDataInCookie(
+          getLocalCookie("cp_user_email"),
+          getLocalCookie("cp_token"),
+          getLocalCookie("cp_user_name")
+        );
+      } else if (typeof cpandroidjsbridge !== "undefined") {
+        updateUserDataInCookie(
+          cpandroidjsbridge.getUserEmail(),
+          cpandroidjsbridge.getUserToken()
+        );
+        Moengage.add_unique_user_id(cpandroidjsbridge.getUserEmail());
+      } else if (location.href.indexOf("bankersadda") > -1 || location.href.indexOf("sscadda") > -1 || location.href.indexOf("teachersadda") > -1) {
+        iframeEl.contentWindow.postMessage(location.origin, "*");
+        var email = getLocalCookie("cp_user_email");
+        if (isMoeEnabled && email && email != "") {
+          Moengage.add_unique_user_id(email);
+        }
+      } else {
+        iframeEl.contentWindow.postMessage(location.origin, "*");
+        var email = getLocalCookie("cp_user_email");
+        if (isMoeEnabled && email && email != "") {
+          Moengage.add_unique_user_id(email);
+        }
+        setTimeout(function() {
+          if (
+            getLocalCookie("cp_user_email") !== "" &&
+            getLocalCookie("cp_token") !== ""
+          )
+            updateUserDataInCookie(
+              getLocalCookie("cp_user_email"),
+              getLocalCookie("cp_token"),
+              getLocalCookie("cp_user_name")
+            );
+        }, 100);
+      }
+    };
+  }
+};
+
+// Send a message to the child iframe
+
+if (window.addEventListener) {
+  window.addEventListener("message", handleMessage);
+} else {
+  window.attachEvent("onmessage", handleMessage);
+}
+
+function handleMessage(event) {
+  if (event.origin === iFrameOrigin) {
+    if (event.data.isReload) {
+      if (popupWindow) popupWindow.close();
+      location.reload();
+      return;
+    }
+    if (!event.data.cpToken) {
+      var email = getLocalCookie("cp_user_email");
+      if (isMoeEnabled && !isLocalUniqueID) {
+        //Moengage.add_unique_user_id(event.data.uid);
+      }
+      createLocalCookie("cp_token", "", -1);
+      createLocalCookie("cp_user_name", "", -1);
+      createLocalCookie("cp_user_email", "", -1);
+      createLocalCookie("cp_token", "", -1, "adda247.com");
+      createLocalCookie("cp_user_name", "", -1, "adda247.com");
+      createLocalCookie("emailID", "", -1, "adda247.com");
+    }
+
+    if (event.data.offLineCartItems !== undefined) {
+      if (event.data.offLineCartItems === "" && !event.data.cpToken) {
+        createLocalCookie("OFFLINE_CART_ITEMS", "", -1, "adda247.com");
+        createLocalCookie("OFFLINE_CART_ITEMS", "", -1);
+      } else {
+        createLocalCookie("OFFLINE_CART_ITEMS", event.data.offLineCartItems, 365);
+      }
+    }
+
+    if (event.data.cpCartCount !== undefined) {
+      if (event.data.cpCartCount === "" && !event.data.cpToken) {
+        createLocalCookie("cp_cart_count", "", -1, "adda247.com");
+        createLocalCookie("cp_cart_count", "", -1);
+      } else {
+        createLocalCookie("cp_cart_count", event.data.cpCartCount, 365);
+      }
+    }
+
+    if (event.data.cpToken) {
+      createLocalCookie("cp_token", event.data.cpToken, 365);
+      createLocalCookie("cp_user_name", event.data.cpUserName, 365);
+      createLocalCookie("cp_user_email", event.data.cpEmail, 365);
+      if (isMoeEnabled && Moengage.update_unique_user_id) {
+        Moengage.update_unique_user_id(event.data.cpEmail);
+      }
+    }
+    if (!event.data.isOptInAllowed) {
+      if (isMoeEnabled) {
+        if (
+          typeof cpandroidjsbridge === "undefined" &&
+          typeof cpiosjsbridge === "undefined"
+        ) {
+          var permissionDenied = localStorage.getItem("addaPushPermission");
+          if (
+            !permissionDenied ||
+            permissionDenied == null ||
+            permissionDenied == ""
+          ) {
+            if (pushDomainUrl.indexOf(location.origin) >= 0) {
+              Moengage.call_web_push();
+              return;
+            }
+            var lastSoftAsk = localStorage.getItem("addaSoftAskPromptTime");
+            var currentTime = new Date().getTime();
+            if (
+              !lastSoftAsk ||
+              currentTime - lastSoftAsk >= 24 * 60 * 60 * 1000
+            ) {
+              //createNotificationPopup();
+            }
+          }
+        }
+      }
+    }
+  } else if (pushDomainUrl.indexOf(event.origin) >= 0) {
+    if (event.data.pushPermissionStatus) {
+      popupWindow.close();
+      if (event.data.pushPermissionStatus === 0) {
+        localStorage.setItem("addaPushPermission", "denied");
+      } else if (event.data.pushPermissionStatus === 1) {
+        iframeEl.contentWindow.postMessage({ isOptInAllowed: true }, "*");
+      }
+    }
+  }
+}
+
+function checkCpTokenInParent() {
+  iframeEl.contentWindow.postMessage("", "*");
+}
+
+function updateOfflineCartItems(cartItems) {
+  cartItems = !cartItems ? "0" : cartItems;
+  iframeEl.contentWindow.postMessage({ cartItems: cartItems }, "*");
+}
+
+function updateUserDataInCookie(email, token, name) {
+  isLocalUniqueID = false;
+  email = !email ? "" : email;
+  token = !token ? "" : token;
+  name = !name ? "" : name;
+  iframeEl.contentWindow.postMessage(
+    { cpToken: token, cpUserName: name, email: email },
+    "*"
+  );
+}
+
+function updateCartCountInCookie(cpCartCount) {
+  cpCartCount = !cpCartCount ? "0" : cpCartCount;
+  iframeEl.contentWindow.postMessage({ cpCartCount: cpCartCount }, "*");
+}
+
+function removeUserDataInCookie(domain) {
+  domain = domain || "";
+  isLocalUniqueID = false;
+  createLocalCookie("cp_token", "", -1, domain);
+  createLocalCookie("cp_user_name", "", -1, domain);
+  createLocalCookie("cp_user_email", "", -1, domain);
+  iframeEl.contentWindow.postMessage({ isRemoveEmail: true }, "*");
+}
+
+function updateUserDetailsGuestCheckout(email, mobile, name) {
+  isLocalUniqueID = true;
+  if (Moengage && Moengage.update_unique_user_id) {
+    Moengage.update_unique_user_id(email);
+  }
+  Moengage.add_email(email);
+  Moengage.add_mobile(mobile);
+  Moengage.add_user_name(name);
+}
+
+if (pushDomainUrl.indexOf(location.origin) == -1) {
+  var popupWindow;
+  window.addEventListener("MOE_OPT_IN", function(e) {
+    if (e.detail === "opt_in_allowed") {
+      iframeEl.contentWindow.postMessage({ isOptInAllowed: true }, "*");
+    }
+    console.log("MOE_OPT_IN : ", e.detail);
+  });
+}
+
+function createNotificationPopup() {
+  
+/*   var notificationPopupHtml =
+    '<div id="cpNotificationPopup" style="display:none;width: 1176px;margin: auto;">' +
+    '   <div id="desktopBannerWrapped" data-rapid_height="50"style="position: fixed;z-index: 2147483647;width: 100%;max-width: 400px;border-radius: 3px;box-shadow: 0 4px 8px 0 rgba(9, 0, 35, 0.5);border: solid 1px #dbdbdb;background-color: #ffffff;">' +
+    '      <div style="padding: 20px;">' +
+    '         <div style="float: left;position: relative;">' +
+    '            <img style="height: 72px!important;width: 72px!important" src="https://storecdn.adda247.com/ic-allow-notifications.svg">' +
+    "         </div>" +
+    '         <div style="position: relative!important;display: inline-block!important;width: calc(100% - 88px)!important;padding-left: 16px;">' +
+    '            <span style="font-size: 16px;font-weight: bold;color: rgba(0, 0, 0, 0.87);" >Get notifications from Adda247.</span>' +
+    '            <p style="font-size: 14px;font-weight: normal;color:#444545;margin-top: 4px;" >Notifications can be turned off anytime from browser settings.</p>' +
+    "         </div>" +
+    '         <div style="clear: both;margin-top: 19px;">' +
+    '            <div style="float: right!important;margin: 0!important;padding: 0!important">' +
+    '               <span style="cursor: pointer;font-size: 16px;font-weight: normal;line-height: 1.5;text-align: center;color: #909399;margin-right: 10px;"' +
+    '               id="cpDenyButton">No, Thanks</span>' +
+    '               <span style="cursor: pointer;font-size: 16px;font-weight: bold;font-style: normal;font-stretch: normal;line-height: 1.5;letter-spacing: normal;text-align: center;color: #ffffff;border-radius: 4px;background-color: #f57f18;padding: 4px 20px;"' +
+    '               id="cpAllowButton">Allow</span>' +
+    "            </div>" +
+    '            <div style="clear: both;"></div>' +
+    "         </div>" +
+    "      </div>" +
+    "   </div>" +
+    "</div>";
+  document.body.insertAdjacentHTML("afterbegin", notificationPopupHtml);
+  localStorage.setItem("addaSoftAskPromptTime", new Date().getTime());
+  document.getElementById("cpNotificationPopup").style.display = "block";
+  document.getElementById("cpAllowButton").onclick = function() {
+    document.getElementById("cpNotificationPopup").style.display = "none";
+    var urlToOpen = pushDomainUrl;
+    popupWindow = window.open(urlToOpen, "_blank");
+    setTimeout(function() {
+      popupWindow.postMessage(
+        location.origin,
+        urlToOpen.replace("/index.html", "")
+      );
+    }, 500);
+  };
+  document.getElementById("cpDenyButton").onclick = function() {
+    document.getElementById("cpNotificationPopup").style.display = "none";
+  }; */
+}
+
+
+function loadJsFile(filepath, callback){
+  var script = document.createElement('script');
+  script.onload = function () {
+    if(callback){
+      callback();
+    }
+  };
+  script.src = filepath;
+  document.head.appendChild(script);
+}
+
+if(!getCookie){
+  function getCookie(name) {
+    let nameEQ = name + "=";
+    let ca = document.cookie.split(';');
+    for(let i=0;i < ca.length;i++) {
+       let c = ca[i];
+       while (c.charAt(0) ===' ') c = c.substring(1,c.length);
+       if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+  }
+}
+
+/* onetap sign in code */ 
+var excludeDomains = ['staging.adda247.com','unitystaging.adda247.com','www.adda247.com','store.adda247.com'];
+var currentDomain = window.location.host;
+
+if ((!getCookie('cp_token') || getCookie('cp_token').length < 3)  && excludeDomains.indexOf(currentDomain)==-1) {
+  loadJsFile("https://accounts.google.com/gsi/client", function(){
+    google.accounts.id.initialize({
+      client_id: '117575776360-se3ubakrmij2q5mouk2rk46740ipurca.apps.googleusercontent.com',
+      callback: handleOneTapSuccess,
+      select_by:'user'
+    });
+    google.accounts.id.prompt((notification) => {
+        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+            
+        }
+    });
+  });
+
+  function parseJwt(token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+  
+    return JSON.parse(jsonPayload);
+  };
+
+  function handleOneTapSuccess(response){
+    var mainToken = response.credential;
+    response = parseJwt(response.credential);
+    const userDetails = {
+      email: response.email,
+      name: response.name,
+      providerName: "g",
+      providerToken: mainToken,
+      providerUserId: response.sub,
+      oneTap:1
+    };
+    registerOrLoginUser(userDetails);
+  }
+}
+/* onetap sign in code ends */ 
